@@ -3,6 +3,7 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Dashboard from "./pages/Dashboard";
 import Bookings from "./pages/Bookings";
 import Cabins from "./pages/Cabins";
@@ -12,6 +13,16 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -29,7 +40,12 @@ function App() {
     { path: "/login", element: <Login /> },
     { path: "*", element: <PageNotFound /> },
   ]);
-  return <RouterProvider router={router}></RouterProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={true} />
+      <RouterProvider router={router}></RouterProvider>
+    </QueryClientProvider>
+  );
 }
 
 export default App;
