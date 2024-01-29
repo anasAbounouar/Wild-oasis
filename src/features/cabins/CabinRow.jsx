@@ -1,10 +1,13 @@
 import styled from "styled-components";
+import { HiPencil, HiSquare2Stack, HiTrash } from "react-icons/hi2";
 import { formatCurrency } from "../../utils/helpers";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
+
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
+import Spinner from "../../ui/Spinner";
+import Button from "../../ui/Button";
+import { useDeleteCabin } from "./useDeleteCabin";
+import { useCreateCabin } from "./useCreateCabin";
 
 const TableRow = styled.div`
   display: grid;
@@ -45,8 +48,6 @@ const Discount = styled.div`
   color: var(--color-green-700);
 `;
 function CabinRow({ cabin }) {
-  const [showForm, setShowForm] = useState(false);
-
   const {
     id: cabinId,
     name,
@@ -54,39 +55,70 @@ function CabinRow({ cabin }) {
     regularPrice,
     discount,
     image,
+    description,
   } = cabin;
-  const queryClient = useQueryClient();
-  const { isLoading: isDeleting, mutate } = useMutation({
-    mutationFn: deleteCabin,
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cabins"],
-      });
-      toast.success("successfully deleted ");
-    },
-    onError: (err) => toast.error(err.message),
-  });
-  return (
-    <>
-      <TableRow rol="row">
-        <img src={image} alt="" />
-        <Cabin>{name}</Cabin>
-        <div>Fits from {maxCapacity} people</div>
-        <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
-        <div>
-          <button onClick={() => setShowForm((h) => !h)}>
-            {showForm ? "cancel" : "edit"}
-          </button>
+  const [showForm, setShowForm] = useState(false);
+  const { isCreating, createNewCabin } = useCreateCabin();
+  function handleDuplicate() {
+    createNewCabin({
+      name: `copy  of ${name}`,
+      maxCapacity,
+      regularPrice,
+      discount,
+      image,
+      description,
+    });
+  }
 
-          <button onClick={() => mutate(cabinId)} disabled={isDeleting}>
-            Delete
-          </button>
-        </div>
-      </TableRow>
-      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
-    </>
-  );
+  // const queryClient = useQueryClient();
+  // const {
+  //   isPending: isDeleting,
+  //   isIdle,
+  //   mutate,
+  // } = useMutation({
+  //   mutationFn: deleteCabin,
+  //   onSuccess: () => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: ["cabins"],
+  //     });
+  //     toast.success("successfully deleted");
+  //   },
+  //   onError: (err) => toast.error(err.message),
+  // });
+  const { isDeleting, deleteCabin } = useDeleteCabin();
+  if (isDeleting) {
+    return <Spinner />;
+  } else {
+    return (
+      <>
+        <TableRow rol="row">
+          <Img src={image} alt="" />
+          <Cabin>{name}</Cabin>
+          <div>Fits from {maxCapacity} people</div>
+          <Price>{formatCurrency(regularPrice)}</Price>
+          {discount ? (
+            <Discount>{formatCurrency(discount)}</Discount>
+          ) : (
+            <span>&mdash;</span>
+          )}
+
+          <div className="flex flex-row">
+            <button onClick={handleDuplicate}>
+              <HiSquare2Stack />
+            </button>
+            <button onClick={() => setShowForm((h) => !h)}>
+              <HiPencil />
+            </button>
+
+            <button onClick={() => deleteCabin(cabinId)} disabled={isDeleting}>
+              <HiTrash />
+            </button>
+          </div>
+        </TableRow>
+        {showForm && <CreateCabinForm cabinToEdit={cabin} />}
+      </>
+    );
+  }
 }
 
 export default CabinRow;

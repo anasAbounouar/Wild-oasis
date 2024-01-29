@@ -17,25 +17,39 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     defaultValues: isEditSession ? editValues : {},
   });
   const { errors } = formState;
-  const { isLoading: isCreating, mutate: createNewCabin } = useMutation({
+  const { isPending: isCreating, mutate: createNewCabin } = useMutation({
     mutationFn: ({ newCabin }) => createCabin(newCabin),
     onSuccess: () => {
       toast.success("cabin is  successfully  created");
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
-      reset();
+      // reset();
     },
     onError: (err) => toast.error(err.message),
   });
-  const { isLoading: isEditing, mutate: editCabin } = useMutation({
+  console.log(
+    useMutation({
+      mutationFn: ({ newCabin }) => createCabin(newCabin),
+      onSuccess: () => {
+        toast.success("cabin is  successfully  created");
+        queryClient.invalidateQueries({
+          queryKey: ["cabins"],
+        });
+        // reset();
+      },
+      onError: (err) => toast.error(err.message),
+    }),
+  );
+
+  const { isPending: isEditing, mutate: editCabin } = useMutation({
     mutationFn: ({ newCabin, id }) => createCabin(newCabin, id),
     onSuccess: () => {
       toast.success("cabin is  successfully  edited");
       queryClient.invalidateQueries({
         queryKey: ["cabins"],
       });
-      reset();
+      // reset();
     },
     onError: (err) => toast.error(err.message),
   });
@@ -49,7 +63,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     }
   }
   const isWorking = isCreating || isEditing;
-  // if (isWorking) return <p>kkkkkkkkkkkkk</p>;
+  if (isWorking) return <p>kkkkkkkkkkkkk</p>;
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Cabin name" error={errors?.name?.message}>

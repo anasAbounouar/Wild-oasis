@@ -8,6 +8,12 @@ import CreateCabinForm from "../features/cabins/CreateCabinForm";
 
 function Cabins() {
   const [showForm, setShowForm] = useState();
+  const btnStyle = {
+    width: "100%",
+
+    marginTop: "10px",
+    marginBottom: "10px",
+  };
   return (
     <>
       <Row type="horizontal">
@@ -18,6 +24,7 @@ function Cabins() {
       <Row>
         <CabinTable />
         <Button
+          style={btnStyle}
           size="large"
           variation="primary"
           onClick={() => setShowForm((h) => !h)}
