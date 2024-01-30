@@ -13,7 +13,7 @@ import FormRow from "../../ui/FormRow";
 import Spinner from "../../ui/Spinner";
 import { useCreateCabin } from "./useCreateCabin";
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditSession = Boolean(editId);
   const { register, handleSubmit, reset, getValues, formState } = useForm({
@@ -66,7 +66,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       createNewCabin(
         { ...data, image },
         {
-          onSuccess: () => reset(),
+          onSuccess: () => {
+            reset();
+            onCloseModal?.();
+          },
         },
       );
     }
@@ -75,7 +78,10 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     return <Spinner />;
   }
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <Form
+      onSubmit={handleSubmit(onSubmit)}
+      type={onCloseModal ? "modal" : "regular"}
+    >
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -143,12 +149,17 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       <FormRow>
         {/* type is an HTML attribute! */}
         {!isEditSession && (
-          <Button variation="secondary" size="medium" type="reset">
+          <Button
+            onClick={() => onCloseModal?.()}
+            variation="secondary"
+            size="medium"
+            type="reset"
+          >
             Cancel
           </Button>
         )}
         <Button disabled={isWorking} variation="primary" size="medium">
-          {isEditSession ? "Modify cabin" : "Add Cabin"}
+          {isEditSession ? "Modify cabin" : "Create New  Cabin"}
         </Button>
       </FormRow>
     </Form>
