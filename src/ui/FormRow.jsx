@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import Input from "./Input";
 
 const StyledFormRow = styled.div`
   display: grid;
@@ -36,6 +35,7 @@ const Error = styled.span`
   font-size: 1.4rem;
   color: var(--color-red-700);
 `;
+
 function FormRow({ label, error, children }) {
   return (
     <StyledFormRow>
