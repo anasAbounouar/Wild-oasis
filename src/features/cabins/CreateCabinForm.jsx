@@ -6,9 +6,7 @@ import Button from "../../ui/Button";
 import FileInput from "../../ui/FileInput";
 import Textarea from "../../ui/Textarea";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createCabin } from "../../services/apiCabins";
-import toast from "react-hot-toast";
+
 import FormRow from "../../ui/FormRow";
 import Spinner from "../../ui/Spinner";
 import { useCreateCabin } from "./useCreateCabin";
@@ -61,7 +59,10 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
     const image = typeof data.image === "string" ? data.image : data.image[0];
 
     if (isEditSession) {
-      editCabin({ newCabin: { ...data, image }, id: editId });
+      editCabin(
+        { newCabin: { ...data, image }, id: editId },
+        { onSuccess: () => onCloseModal?.() },
+      );
     } else {
       createNewCabin(
         { ...data, image },
@@ -158,7 +159,12 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
             Cancel
           </Button>
         )}
-        <Button disabled={isWorking} variation="primary" size="medium">
+        <Button
+          type="submit"
+          disabled={isWorking}
+          variation="primary"
+          size="medium"
+        >
           {isEditSession ? "Modify cabin" : "Create New  Cabin"}
         </Button>
       </FormRow>
