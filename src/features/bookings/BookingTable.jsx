@@ -2,11 +2,17 @@ import BookingRow from "./BookingRow";
 import Table from "../../ui/Table";
 import Menus from "../../ui/Menus";
 import Empty from "../../ui/Empty";
+import { useQuery } from "@tanstack/react-query";
+import { useBookings } from "./useBookings";
+import Spinner from "../../ui/Spinner";
 
 function BookingTable() {
-  const bookings = [];
+  const { bookings, isLoading } = useBookings();
+  if (isLoading) return <Spinner />;
 
-  if (!bookings.length) return <Empty resource="bookings" />;
+  // console.log(data);
+  // const bookings = [];
+  // if (!bookings.length) return <Empty resource="bookings" />;
 
   return (
     <Menus>
