@@ -1,7 +1,7 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-
+import { PAGE_SIZE } from "../utils/constants";
 const StyledPagination = styled.div`
   width: 100%;
   display: flex;
@@ -57,7 +57,11 @@ const PaginationButton = styled.button`
     color: var(--color-brand-50);
   }
 `;
-const PAGE_SIZE = 10;
+const Span = styled.span`
+  margin-left: 2px;
+  margin-right: 2px;
+`;
+
 function Pagination({ count }) {
   const [searchParams, setSeachParams] = useSearchParams();
 
@@ -82,12 +86,13 @@ function Pagination({ count }) {
   return (
     <StyledPagination>
       <P>
-        showing <span>{(currentPage - 1) * (PAGE_SIZE + 1)} </span> to
-        <span>
+        showing <Span>{(currentPage - 1) * (PAGE_SIZE + 1)} </Span>{" "}
+        <Span>to</Span>
+        <Span>
           {currentPage === pageCount ? count : currentPage * PAGE_SIZE}
-        </span>
-        of
-        <span>{count}</span> results
+        </Span>
+        <Span>of</Span>
+        <Span>{count}</Span> results
       </P>
       <Buttons>
         <PaginationButton onClick={PrevPage} disabled={currentPage === 1}>
