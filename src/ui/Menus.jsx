@@ -109,17 +109,16 @@ function List({ id, children }) {
   );
 }
 
-function Button({ id, children, icon, onClick }) {
+function Button({ children, icon, onClick }) {
   const { close } = useContext(MenusContext);
 
   function handleClick() {
-    console.log("handle click in menu");
     onClick?.();
     close();
   }
   return (
     <li>
-      <StyledButton onClick={handleClick}>
+      <StyledButton onClick={() => handleClick()}>
         {icon} <span>{children}</span>
       </StyledButton>
     </li>

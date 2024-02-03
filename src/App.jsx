@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import {
   Navigate,
   RouterProvider,
@@ -13,13 +14,14 @@ import Account from "./pages/Account";
 import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./ui/AppLayout";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Checkin from "./pages/Checkin";
 
-import toast, { Toaster } from "react-hot-toast";
+import  { Toaster } from "react-hot-toast";
+import Booking from "./pages/Booking";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 20,
+      staleTime: 60,
     },
   },
 });
@@ -32,6 +34,8 @@ function App() {
         { index: true, element: <Navigate replace to="dashboard" /> },
         { path: "/dashboard", element: <Dashboard /> },
         { path: "/bookings", element: <Bookings /> },
+        { path: "/bookings/:bookingId", element: <Booking /> },
+        { path: "/checkin/:bookingId", element: <Checkin /> },
         { path: "/cabins", element: <Cabins /> },
         { path: "/users", element: <Users /> },
         { path: "/settings", element: <Settings /> },
