@@ -98,7 +98,7 @@ function Toggle({ id }) {
   );
 }
 function List({ id, children }) {
-  const { openId, position,close } = useContext(MenusContext);
+  const { openId, position, close } = useContext(MenusContext);
   const ref = useOutsideClick(close);
   if (openId !== id) return null;
   return createPortal(
@@ -111,14 +111,16 @@ function List({ id, children }) {
 
 function Button({ id, children, icon, onClick }) {
   const { close } = useContext(MenusContext);
+
   function handleClick() {
+    console.log("handle click in menu");
     onClick?.();
     close();
   }
   return (
     <li>
       <StyledButton onClick={handleClick}>
-        {icon} <span>{children}</span>{" "}
+        {icon} <span>{children}</span>
       </StyledButton>
     </li>
   );
