@@ -14,13 +14,14 @@ export async function signup({ fullName, email, password }) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: {},
-    data: {},
-    fullName,
-    avatar: "",
+    options: {
+      data: { fullName, avatar: "" }, // Move fullName and avatar here
+    },
   });
+
   if (error) throw new Error(error.message);
-  return { data };
+  console.log(data);
+  return data;
 }
 
 export async function getCurrentUser() {

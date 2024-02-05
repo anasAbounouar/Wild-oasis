@@ -6,11 +6,7 @@ import toast from "react-hot-toast";
 export function useLogin() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const {
-    mutate: login,
-    isPending,
-    isIdle,
-  } = useMutation({
+  const { mutate: login, isPending } = useMutation({
     mutationFn: ({ email, password }) => loginApi({ email, password }),
     onSuccess: (user) => {
       // lets store user in the cash manually
@@ -23,6 +19,6 @@ export function useLogin() {
       toast.error("email or password are incorrect ");
     },
   });
-  const isLoading = isPending || !isIdle;
+  const isLoading = isPending;
   return { login, isLoading };
 }
