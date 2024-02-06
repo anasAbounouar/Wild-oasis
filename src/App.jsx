@@ -19,6 +19,7 @@ import Checkin from "./pages/Checkin";
 import { Toaster } from "react-hot-toast";
 import Booking from "./pages/Booking";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import { DarkModeProvider } from "./context/DarkModeContext";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -51,38 +52,40 @@ function App() {
     { path: "*", element: <PageNotFound /> },
   ]);
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={true} />
-      <RouterProvider router={router}></RouterProvider>
-      <Toaster
-        position="top-center"
-        reverseOrder={false}
-        gutter={8}
-        containerClassName=""
-        containerStyle={{}}
-        toastOptions={{
-          // Define default options
-          className: "",
-          duration: 5000,
-          style: {
-            fontSize: "16px",
-            background: "var(--color-grey-0)",
-            color: "var(--color-grey-700)",
-            padding: "16px 24px",
-            maxWidth: "500px",
-          },
-
-          // Default options for specific types
-          success: {
-            duration: 3000,
-            theme: {
-              primary: "green",
-              secondary: "black",
+    <DarkModeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen={true} />
+        <RouterProvider router={router}></RouterProvider>
+        <Toaster
+          position="top-center"
+          reverseOrder={false}
+          gutter={8}
+          containerClassName=""
+          containerStyle={{}}
+          toastOptions={{
+            // Define default options
+            className: "",
+            duration: 5000,
+            style: {
+              fontSize: "16px",
+              background: "var(--color-grey-0)",
+              color: "var(--color-grey-700)",
+              padding: "16px 24px",
+              maxWidth: "500px",
             },
-          },
-        }}
-      />
-    </QueryClientProvider>
+
+            // Default options for specific types
+            success: {
+              duration: 3000,
+              theme: {
+                primary: "green",
+                secondary: "black",
+              },
+            },
+          }}
+        />
+      </QueryClientProvider>
+    </DarkModeProvider>
   );
 }
 
