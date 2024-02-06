@@ -8,6 +8,7 @@ const StyledUserAvatar = styled.div`
   font-weight: 500;
   font-size: 1.4rem;
   color: var(--color-grey-600);
+  justify-content: flex-end;
 `;
 
 const Avatar = styled.img`
@@ -23,9 +24,16 @@ const Avatar = styled.img`
 
 function UserAvatar() {
   const { user } = useUser();
-  console.log(user);
   const { fullName, avatar } = user.user_metadata;
-  return <div>avatar</div>;
+  return (
+    <StyledUserAvatar>
+      <Avatar
+        src={avatar || "default-user.jpg"}
+        alt={`avatar of ${fullName}`}
+      />
+      <span>{fullName}</span>
+    </StyledUserAvatar>
+  );
 }
 
 export default UserAvatar;
