@@ -20,6 +20,7 @@ import { Toaster } from "react-hot-toast";
 import Booking from "./pages/Booking";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import { DarkModeProvider } from "./context/DarkModeContext";
+import ErrorFallback from "./ui/ErrorFallback";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -36,6 +37,7 @@ function App() {
           <AppLayout />
         </ProtectedRoute>
       ),
+      errorElement: <ErrorFallback />,
       children: [
         { index: true, element: <Navigate replace to="dashboard" /> },
         { path: "/dashboard", element: <Dashboard /> },
