@@ -4,6 +4,7 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
+import { lazy } from 'react';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import Dashboard from "./pages/Dashboard";
 // import Bookings from "./pages/Bookings";
