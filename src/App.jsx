@@ -4,7 +4,7 @@ import {
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
-import { lazy } from 'react';
+import { Suspense, lazy } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 // import Dashboard from "./pages/Dashboard";
 // import Bookings from "./pages/Bookings";
@@ -22,6 +22,7 @@ import { Toaster } from "react-hot-toast";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import ErrorFallback from "./ui/ErrorFallback";
 import AppLayout from "./ui/AppLayout";
+import Spinner from "./ui/Spinner";
 // Lazy-loaded components
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Bookings = lazy(() => import("./pages/Bookings"));
@@ -66,40 +67,43 @@ function App() {
     { path: "*", element: <PageNotFound /> },
   ]);
   return (
-    <DarkModeProvider>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={true} />
-        <RouterProvider router={router}></RouterProvider>
-        <Toaster
-          position="top-center"
-          reverseOrder={false}
-          gutter={8}
-          containerClassName=""
-          containerStyle={{}}
-          toastOptions={{
-            // Define default options
-            className: "",
-            duration: 5000,
-            style: {
-              fontSize: "16px",
-              background: "var(--color-grey-0)",
-              color: "var(--color-grey-700)",
-              padding: "16px 24px",
-              maxWidth: "500px",
-            },
+    <Suspense fallback={<Spinner />}>
+      <DarkModeProvider>
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={true} />
+          <RouterProvider router={router} />
+          <Toaster
+            position="top-center"
+            reverseOrder={false}
+            gutter={8}
+            containerClassName=""
+            containerStyle={{}}
+            toastOptions={{
+              // Define default options
+              className: "",
+              duration: 5000,
+              style: {
+                fontSize: "16px",
+                background: "var(--color-grey-0)",
+                color: "var(--color-grey-700)",
 
-            // Default options for specific types
-            success: {
-              duration: 3000,
-              theme: {
-                primary: "green",
-                secondary: "black",
+                padding: "16px 24px",
+                maxWidth: "500px",
               },
-            },
-          }}
-        />
-      </QueryClientProvider>
-    </DarkModeProvider>
+
+              // Default options for specific types
+              success: {
+                duration: 3000,
+                theme: {
+                  primary: "green",
+                  secondary: "black",
+                },
+              },
+            }}
+          />
+        </QueryClientProvider>
+      </DarkModeProvider>
+    </Suspense>
   );
 }
 
