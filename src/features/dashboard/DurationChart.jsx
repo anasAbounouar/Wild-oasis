@@ -150,14 +150,14 @@ function DurationChart({ confirmedStays }) {
       <Heading type="" as="h2">
         Stay duration summary
       </Heading>
-      <ResponsiveContainer width="100%" height={240}>
+      <ResponsiveContainer width="100%" height={"100%"}>
         <PieChart>
           <Pie
             data={data}
             nameKey="duration"
             dataKey="value"
             innerRadius={85}
-            outerRadius={110}
+            outerRadius={100}
             cx="50%"
             cy="50%"
             paddingAngle={3}
@@ -174,7 +174,7 @@ function DurationChart({ confirmedStays }) {
           <Legend
             verticalAlign="middle"
             align="right"
-            // width="30%"
+            // width="1:0%"
             layout="vertical"
             iconSize={15}
             iconType="circle"
