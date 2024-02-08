@@ -5,22 +5,33 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Dashboard from "./pages/Dashboard";
-import Bookings from "./pages/Bookings";
-import Cabins from "./pages/Cabins";
-import Users from "./pages/Users";
-import Settings from "./pages/Settings";
-import Account from "./pages/Account";
-import Login from "./pages/Login";
-import PageNotFound from "./pages/PageNotFound";
-import AppLayout from "./ui/AppLayout";
-import Checkin from "./pages/Checkin";
+// import Dashboard from "./pages/Dashboard";
+// import Bookings from "./pages/Bookings";
+// import Cabins from "./pages/Cabins";
+// import Users from "./pages/Users";
+// import Settings from "./pages/Settings";
+// import Account from "./pages/Account";
+// import Login from "./pages/Login";
+// import PageNotFound from "./pages/PageNotFound";
+// import Checkin from "./pages/Checkin";
+// import Booking from "./pages/Booking";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 import { Toaster } from "react-hot-toast";
-import Booking from "./pages/Booking";
-import ProtectedRoute from "./ui/ProtectedRoute";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import ErrorFallback from "./ui/ErrorFallback";
+import AppLayout from "./ui/AppLayout";
+// Lazy-loaded components
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const Bookings = React.lazy(() => import("./pages/Bookings"));
+const Booking = React.lazy(() => import("./pages/Booking"));
+const Checkin = React.lazy(() => import("./pages/Checkin"));
+const Cabins = React.lazy(() => import("./pages/Cabins"));
+const Users = React.lazy(() => import("./pages/Users"));
+const Settings = React.lazy(() => import("./pages/Settings"));
+const Account = React.lazy(() => import("./pages/Account"));
+const Login = React.lazy(() => import("./pages/Login"));
+const PageNotFound = React.lazy(() => import("./pages/PageNotFound"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
