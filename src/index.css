@@ -28,7 +28,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  zoom: 80%;
+  transform: scale(0.5); /* Scale the entire body content down to 80% */
+  transform-origin: top left; /* Ensure the scaling originates from the top-left corner */
 }
 
 h1 {
