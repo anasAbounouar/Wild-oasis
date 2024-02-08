@@ -59,7 +59,7 @@ function UpdatePasswordForm() {
           size="medium"
           onClick={reset}
           type="reset"
-          variation="secondary"
+         
         >
           Cancel
         </Button>
