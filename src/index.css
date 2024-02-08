@@ -29,9 +29,6 @@ body {
   min-width: 320px;
   min-height: 100vh;
   zoom: 80%;
-  /* or */
-  transform: scale(0.8);
-  transform-origin: 0 0; /* Adjust the origin to the top left corner */
 }
 
 h1 {
