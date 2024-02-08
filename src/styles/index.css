@@ -135,8 +135,8 @@ body {
   min-height: 100vh;
   line-height: 1.5;
   font-size: 1.6rem;
-  transform: scale(0.8); /* Scale the entire body content down to 80% */
-  transform-origin: top left; /* Ensure the scaling originates from the top-left corner */
+  transform: scale(0.9); /* Scale the entire body content down to 80% */
+  transform-origin: center center; /* Ensure the scaling originates from the top-left corner */
 }
 
 input,
