@@ -22,16 +22,16 @@ import { DarkModeProvider } from "./context/DarkModeContext";
 import ErrorFallback from "./ui/ErrorFallback";
 import AppLayout from "./ui/AppLayout";
 // Lazy-loaded components
-const Dashboard = React.lazy(() => import("./pages/Dashboard"));
-const Bookings = React.lazy(() => import("./pages/Bookings"));
-const Booking = React.lazy(() => import("./pages/Booking"));
-const Checkin = React.lazy(() => import("./pages/Checkin"));
-const Cabins = React.lazy(() => import("./pages/Cabins"));
-const Users = React.lazy(() => import("./pages/Users"));
-const Settings = React.lazy(() => import("./pages/Settings"));
-const Account = React.lazy(() => import("./pages/Account"));
-const Login = React.lazy(() => import("./pages/Login"));
-const PageNotFound = React.lazy(() => import("./pages/PageNotFound"));
+const Dashboard = lazy(() => import("./pages/Dashboard"));
+const Bookings = lazy(() => import("./pages/Bookings"));
+const Booking = lazy(() => import("./pages/Booking"));
+const Checkin = lazy(() => import("./pages/Checkin"));
+const Cabins = lazy(() => import("./pages/Cabins"));
+const Users = lazy(() => import("./pages/Users"));
+const Settings = lazy(() => import("./pages/Settings"));
+const Account = lazy(() => import("./pages/Account"));
+const Login = lazy(() => import("./pages/Login"));
+const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
